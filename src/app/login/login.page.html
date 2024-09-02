@@ -16,7 +16,7 @@
       <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
     </ion-item>
 
-    <ion-button expand="full" type="submit">Ingresar</ion-button>
-    <ion-button expand="full" color="medium" (click)="resetPassword()">Restablecer Contraseña</ion-button>
+    <ion-button [routerLink]="['/home']" expand="full" type="submit">Ingresar</ion-button>
+    <ion-button [routerLink]="['/reset-password']" expand="full" color="medium" (click)="resetPassword()">Restablecer Contraseña</ion-button>
   </form>
 </ion-content>
