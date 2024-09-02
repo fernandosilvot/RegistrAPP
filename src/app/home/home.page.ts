@@ -1,37 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/angular/standalone';
-import { RouterLink } from '@angular/router';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [
-    IonButton,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    RouterLink
-  ]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule]
 })
 export class HomePage implements OnInit {
-  username: string = 'Usuario';
+  username: string = '';
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
-
-  logout() {
-    console.log('Cerrando sesión');
+  ngOnInit() {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      this.username = navigation.extras.state['username'];
+    }
   }
 }

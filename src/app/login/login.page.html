@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
     <ion-item>
       <ion-label position="floating">Nombre de Usuario</ion-label>
       <ion-input [(ngModel)]="username" name="username" required></ion-input>
@@ -16,7 +16,7 @@
       <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
     </ion-item>
 
-    <ion-button [routerLink]="['/home']" expand="full" type="submit">Ingresar</ion-button>
-    <ion-button [routerLink]="['/reset-password']" expand="full" color="medium" (click)="resetPassword()">Restablecer Contraseña</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="!loginForm.form.valid">Ingresar</ion-button>
+    <ion-button expand="full" color="medium" (click)="resetPassword()">Restablecer Contraseña</ion-button>
   </form>
 </ion-content>
