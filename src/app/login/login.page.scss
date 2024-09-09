@@ -1,0 +1,54 @@
+#inicio{
+    text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80%;
+  transform: translateY(-50%);
+  align-items: center;
+}
+
+.ion-padding{
+    display: flex;
+    align-items: center;
+    
+
+    
+}
+
+#lbNombre, #lbContraseña{
+    
+    
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px;
+    
+    margin-left: auto;
+    margin-right:auto;
+}
+
+#idUsername, #idPassword{
+    
+    padding:5px;
+    margin-top: 10px;
+    
+}
+
+#idBotonIngresar{
+    width: 200px;
+    height: 100px;
+    margin-top: 10px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right:auto;
+}
+
+#idBotonREstablecer{
+    width: 200px;
+    height: 50px;
+    margin-top: 10px;
+    
+    margin-left: auto;
+    margin-right:auto;
+}
