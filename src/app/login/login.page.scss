@@ -1,62 +1,48 @@
-#inicio{
+ion-header {
+  --background: #FFFFFF;
+  --color: white;
+}
+ion-toolbar {
+  --background: #FFFFFF;
+  --color: white;
+}
+
+ion-content {
+  --background: #FFFFFF;
+}
+ion-button {
+  --color: #FFFFFF; /* Cambia el color del texto de los botones */
+}
+
+#inicio {
     text-align: center;
+    margin-top: 20px; /* Añadido para más espacio */
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 80%;
-  transform: translateY(-50%);
-  align-items: center;
-}
-
-.ion-padding{
+  }
+  
+  .logo-container {
     display: flex;
-    align-items: center;
-    
-
-    
-}
-
-#lbNombre, #lbContraseña{
-    
-    
-    margin-top: 15px;
-    margin-bottom: 15px;
-    padding: 5px;
-    
-    margin-left: auto;
-    margin-right:auto;
-}
-
-#idUsername, #idPassword{
-    
-    padding:5px;
-    margin-top: 10px;
-    
-}
-
-#idBotonIngresar{
-    width: 200px;
-    height: 100px;
-    margin-top: 10px;
     justify-content: center;
-    margin-left: auto;
-    margin-right:auto;
-}
-
-#idBotonREstablecer{
-    width: 200px;
-    height: 50px;
-    margin-top: 10px;
-    
-    margin-left: auto;
-    margin-right:auto;
-}
-
-#idPassword, #idUsername{
-    width: 200px;
-    height: 50px;
-    margin-left: auto;
-    margin-right:auto;
-
-}
+    margin-bottom: 20px; /* Añadido para espacio entre logo y formulario */
+  }
+  
+  .logo {
+    width: 100px; /* Ajusta el tamaño del logo según sea necesario */
+    height: auto;
+  }
+  
+  ion-item {
+    --background: #FFFFFF; /* Cambia el fondo a blanco */
+    --color : #000000; /* Cambia el color del texto
+  }
+  
+  ion-button {
+    margin-top: 10px; /* Espaciado consistente entre botones */
+  }
+  
+  
+  h1, p{
+    color: #000000; /* Color del texto de los encabezados */
+    justify-content: center;
+    display: flex;
+  }

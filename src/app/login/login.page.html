@@ -1,13 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title id="inicio">Iniciar Sesión</ion-title>
+<ion-header >
+  <ion-toolbar >
+    <img src="../../assets/duoc-logo.png" alt="Logo Duoc" style="height: 40px; margin-left: 10px;"/>
+    <h1 slot="end">RegistrAPP</h1>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <h1>Iniciar Sesión</h1>
+  <p >Ingresa tu correo y contraseña para acceder a la aplicación.</p>
   <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
     <ion-item id="idItem">
-      <ion-label position="floating" id="lbNombre">Nombre de Usuario</ion-label>
+      <ion-label position="floating" id="lbNombre">Correo de Usuario</ion-label>
       <ion-input [(ngModel)]="username" name="username" required id="idUsername"></ion-input>
     </ion-item>
 
@@ -16,7 +19,7 @@
       <ion-input [(ngModel)]="password" name="password" type="password" required id="idPassword"></ion-input>
     </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="!loginForm.form.valid" id="idBotonIngresar">Ingresar</ion-button>
-    <ion-button expand="full" color="medium" (click)="resetPassword()" id="idBotonREstablecer">Restablecer Contraseña</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="!loginForm.form.valid" id="idBotonIngresar">Ingresar</ion-button>
+    <ion-button expand="block" color="medium" (click)="resetPassword()" id="idBotonREstablecer">Restablecer Contraseña</ion-button>
   </form>
 </ion-content>

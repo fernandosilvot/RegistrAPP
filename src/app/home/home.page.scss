@@ -1,29 +1,54 @@
+ion-header {
+  --background: #FFFFFF;
+  --color: white;
+}
+ion-toolbar {
+  --background: #FFFFFF;
+  --color: white;
+}
 
+ion-content {
+  --background: #FFFFFF;
+}
 
-#container {
+ion-button {
+  --color: #FFFFFF; /* Cambia el color del texto de los botones */
+}
+
+welcome-container {
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-top: 20px; /* Añadido para más espacio */
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+h2, h3 {
+  color: #000000; /* Color del texto de los encabezados */
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+ion-card {
+  margin: 10px 0; /* Espaciado entre las tarjetas */
 }
 
-#container a {
-  text-decoration: none;
+ul {
+  list-style: none;
+  padding: 0;
+  border-radius: 10px;
+  background-color: #132CAA;
+  
+}
+
+li {
+  display: flex;
+  justify-content: center;
+  padding: 5px 0; /* Espaciado entre elementos de la lista */
+}
+
+ion-button {
+  margin-top: 10px; /* Espaciado consistente entre botones */
+}
+
+
+video {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
