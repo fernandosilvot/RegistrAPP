@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <img src="../../assets/duoc-logo.png" alt="Logo Duoc" style="height: 40px; margin-left: 10px;"/>
-    <ion-button (click)="logout()" slot="end">Cerrar Sesión</ion-button>
+    <ion-button (click)="logout()" slot="end" color="danger">Cerrar Sesión</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -13,6 +13,7 @@
     <ul>
       <li *ngFor="let clase of classes" style="color: color: #white;">{{ clase }}</li>
     </ul>
+    <h2>Ubicación de tu sede:</h2>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.7332100753897!2d-70.62706638479813!3d-33.48265898076854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5f60dd1c1f1%3A0x2e3b1e25d28707e!2sAv.%20Vicu%C3%B1a%20Mackenna%204917%2C%20San%20Joaqu%C3%ADn%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile!5e0!3m2!1ses-419!2scl!4v1698412940221!5m2!1ses-419!2scl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
   </div>
 
