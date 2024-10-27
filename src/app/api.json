@@ -1,0 +1,57 @@
+[
+    {
+        "Nombre": "Juan Perez",
+        "correo": "juan.perez@example.com",
+        "Cargo": "alumno",
+        "clases": [
+            {
+                "nombre clase": "Matemáticas",
+                "seccion": "A"
+            }
+        ]
+    },
+    {
+        "Nombre": "Maria Lopez",
+        "correo": "maria.lopez@example.com",
+        "Cargo": "alumno",
+        "clases": [
+            {
+                "nombre clase": "Historia",
+                "seccion": "B"
+            }
+        ]
+    },
+    {
+        "Nombre": "Carlos Ruiz",
+        "correo": "carlos.ruiz@example.com",
+        "Cargo": "alumno",
+        "clases": [
+            {
+                "nombre clase": "Ciencias",
+                "seccion": "C"
+            }
+        ]
+    },
+    {
+        "Nombre": "Ana Gomez",
+        "correo": "ana.gomez@example.com",
+        "Cargo": "alumno",
+        "clases": [
+            {
+                "nombre clase": "Literatura",
+                "seccion": "D"
+            }
+        ]
+    },
+    {
+        "Nombre": "Luis Fernandez",
+        "correo": "luis.fernandez@example.com",
+        "Cargo": "alumno",
+        "clases": [
+            {
+                "nombre clase": "Geografía",
+                "seccion": "E"
+            }
+        ]
+    }
+]
