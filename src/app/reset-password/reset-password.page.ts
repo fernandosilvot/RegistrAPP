@@ -28,7 +28,6 @@ export class ResetPasswordPage implements OnInit {
   }
 
   isValidEmail(email: string): boolean {
-    // Verificar que el correo contenga "@" y ".com"
     return email.includes('@') && email.endsWith('.com');
   }
 

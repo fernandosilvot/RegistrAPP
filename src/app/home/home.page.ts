@@ -3,21 +3,21 @@ import { CommonModule } from '@angular/common';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonCard } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { BrowserMultiFormatReader } from '@zxing/library';
-import { AuthService } from '../services/auth.service'; // Importa el servicio
+import { AuthService } from '../services/auth.service'; 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButton, CommonModule, IonCard ], // Asegúrate de incluir IonButton aquí
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButton, CommonModule, IonCard ], 
 })
 export class HomePage implements OnInit {
   username: string = '';
   fullName: string = '';
   classes: string[] = [];
   scannedCode: string | null = null;
-  codeReader: BrowserMultiFormatReader | null = null; // Propiedad para el lector de códigos
+  codeReader: BrowserMultiFormatReader | null = null; 
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -45,14 +45,14 @@ export class HomePage implements OnInit {
 
   stopQrScanner() {
     if (this.codeReader) {
-      this.codeReader.reset(); // Detiene la cámara
-      this.scannedCode = null; // Limpia el código escaneado
-      this.codeReader = null; // Limpia el lector
+      this.codeReader.reset(); 
+      this.scannedCode = null; 
+      this.codeReader = null; 
     }
   }
 
   logout() {
-    this.authService.setUsername(''); // Limpia el nombre de usuario
-    this.router.navigate(['/login']); // Redirige a la página de inicio de sesión
+    this.authService.setUsername(''); 
+    this.router.navigate(['/login']); 
   }
 }

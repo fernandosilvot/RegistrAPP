@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
           if (user) {
             console.log('Usuario:', user);
             const { contraseña, ...userWithoutPassword } = user; 
-            this.authService.setUsername(userWithoutPassword.correo); // Guarda el nombre de usuario
+            this.authService.setUsername(userWithoutPassword.correo); 
             this.router.navigate(['/home'], { state: { 
               username: userWithoutPassword.correo, 
               fullName: `${user.nombre} ${user.apellido}`, 
