@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonInput, LoadingController } from '@ionic/angular/standalone';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -16,28 +16,39 @@ export class LoginPage implements OnInit {
   username: string = '';
   password: string = '';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private loadingController: LoadingController) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
+  }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.username && this.password) {
+      const loading = await this.loadingController.create({
+        message: 'Iniciando sesión...',
+      });
+      await loading.present();
+
       this.authService.validateUser(this.username, this.password).subscribe(
-        (user) => {
+        async (user) => {
+          await loading.dismiss(); // Cerrar el loading
+
           if (user) {
-            console.log('Usuario:', user);
-            const { contraseña, ...userWithoutPassword } = user; 
-            this.authService.setUsername(userWithoutPassword.correo); 
-            this.router.navigate(['/home'], { state: { 
-              username: userWithoutPassword.correo, 
-              fullName: `${user.nombre} ${user.apellido}`, 
-              classes: user.asignaturas || [] 
-            }}); 
+            this.authService.setUserDetails({
+              correo: user.correo,
+              nombre: user.nombre,
+              apellido: user.apellido,
+              clases: user.asignaturas || [] // Asegúrate de que 'asignaturas' contenga las clases
+            });
+            this.router.navigate(['/home']);
           } else {
             console.log('Credenciales incorrectas');
           }
         },
-        (error) => {
+        async (error) => {
+          await loading.dismiss(); // Cerrar el loading
           console.error('Error al validar el usuario', error);
         }
       );
