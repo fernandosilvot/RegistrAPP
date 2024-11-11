@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, LoadingController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, LoadingController, AlertController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { BrowserMultiFormatReader } from '@zxing/library';
 import { AuthService } from '../services/auth.service';
@@ -22,7 +22,8 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -67,8 +68,27 @@ export class HomePage implements OnInit {
     }
   }
 
-  logout() {
-    this.authService.logout(); // Llamada a logout en AuthService para limpiar Local Storage
-    this.router.navigate(['/login']);
+  async logout() {
+    const alert = await this.alertController.create({
+      header: 'Cerrar sesión',
+      message: '¿Estás seguro de que deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cerrar sesión cancelado');
+          }
+        },
+        {
+          text: 'Cerrar sesión',
+          handler: () => {
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }  
 }

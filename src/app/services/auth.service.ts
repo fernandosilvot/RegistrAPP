@@ -7,9 +7,15 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://18.206.204.148:3000/usuarios'; // URL de la API
+  private apiUrl = 'http://3.88.22.57:3000/usuarios'; // URL de la API
 
   constructor(private http: HttpClient) {}
+
+  validateEmail(email: string): Observable<boolean> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map((users) => users.some((user) => user.correo === email))
+    );
+  }
 
   validateUser(username: string, password: string): Observable<any> {
     return this.http.get<any[]>(this.apiUrl).pipe(
