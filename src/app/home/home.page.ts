@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, LoadingController, AlertController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, LoadingController, AlertController, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { BrowserMultiFormatReader } from '@zxing/library';
 import { AuthService } from '../services/auth.service';
@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButton, CommonModule],
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButton, CommonModule, IonIcon],
 })
 export class HomePage implements OnInit {
   username: string = '';
