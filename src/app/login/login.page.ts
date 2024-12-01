@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
               correo: user.correo,
               nombre: user.nombre,
               apellido: user.apellido,
-              clases: user.clases || [],
+              asignaturas: user.asignaturas || [], // Cambiado a 'asignaturas'
             });
             this.loginError = false; // Restablecer el error de inicio de sesión
             this.router.navigate(['/home']);

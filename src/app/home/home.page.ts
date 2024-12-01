@@ -60,19 +60,19 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     const userDetails = this.authService.getUserDetails();
-    
+
     if (!userDetails || !userDetails.username) {
       this.router.navigate(['/login']);
       return;
     }
-  
+
     this.username = userDetails.username;
     this.fullName = userDetails.fullName || '';
-    this.asignaturas = userDetails.classes.map((clase: any) => ({
-      asignatura: clase.asignatura || '',
-      seccion: clase.seccion || '',
-      sala: clase.sala || '',
-      fecha: clase.fecha || '',
+    this.asignaturas = userDetails.asignaturas.map((asignatura: any) => ({
+      asignatura: asignatura.asignatura || '',
+      seccion: asignatura.seccion || '',
+      sala: asignatura.sala || '',
+      fecha: asignatura.fecha || '',
     }));
   }
 

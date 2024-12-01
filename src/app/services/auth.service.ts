@@ -20,32 +20,41 @@ export class AuthService {
   validateUser(username: string, password: string): Observable<any> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map((users) => {
-        const user = users.find((user) => user.correo === username && user.contraseña === password);
+        const user = users.find(
+          (user) => user.correo === username && user.contraseña === password
+        );
         return user;
       })
     );
   }
 
-  setUserDetails(user: { correo: string; nombre: string; apellido: string; clases: any[] }) {
+  setUserDetails(user: {
+    correo: string;
+    nombre: string;
+    apellido: string;
+    asignaturas: any[];
+  }) {
     const fullName = `${user.nombre} ${user.apellido}`;
     localStorage.setItem('username', user.correo);
     localStorage.setItem('fullName', fullName);
 
     // Convertir cada asignatura en un objeto con propiedades definidas
-    const formattedClasses = user.clases.map((clase) => ({
-      nombre: clase.nombre || '',
-      seccion: clase.seccion || '',
-      sala: clase.sala || '',
-      horario: clase.horario || '',
+    const formattedAsignaturas = user.asignaturas.map((asignatura) => ({
+      asignatura: asignatura.asignatura || '',
+      seccion: asignatura.seccion || '',
+      sala: asignatura.sala || '',
+      fecha: asignatura.fecha || '',
     }));
-    localStorage.setItem('classes', JSON.stringify(formattedClasses));
+    localStorage.setItem('asignaturas', JSON.stringify(formattedAsignaturas));
   }
 
   getUserDetails() {
     const username = localStorage.getItem('username');
     const fullName = localStorage.getItem('fullName');
-    const classes = JSON.parse(localStorage.getItem('classes') || '[]'); // Recuperar y parsear las clases
-    return { username, fullName, classes };
+    const asignaturas = JSON.parse(
+      localStorage.getItem('asignaturas') || '[]'
+    ); // Recuperar y parsear las asignaturas
+    return { username, fullName, asignaturas };
   }
 
   isAuthenticated(): boolean {
@@ -55,6 +64,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('username');
     localStorage.removeItem('fullName');
-    localStorage.removeItem('classes'); // Limpiar también las clases
+    localStorage.removeItem('asignaturas'); // Limpiar también las asignaturas
   }
 }
