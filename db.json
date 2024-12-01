@@ -1,32 +1,56 @@
 {
-    "usuarios": [
-      {
-        "nombre": "Juan",
-        "apellido": "Pérez",
-        "correo": "juan.perez@example.com",
-        "contraseña": "password123",
-        "tipo_usuario": "estudiante",
-        "asignaturas": [
-          "Programacion base de datos 019D",
-          "Arquitectura 019D",
-          "Portafolio 019D"
-        ],
-        "clases_aceptadas": [],
-        "id": "f339"
-      },
-      {
-        "nombre": "María",
-        "apellido": "González",
-        "correo": "maria.gonzalez@example.com",
-        "contraseña": "securePass456",
-        "tipo_usuario": "docente",
-        "asignaturas": [
-          "Programacion base de datos 019D",
-          "Arquitectura 019D"
-        ],
-        "clases_aceptadas": [],
-        "id": "128a"
-      }
-    ]
-  }
-  
+  "usuarios": [
+    {
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "correo": "juan.perez@example.com",
+      "contraseña": "password123",
+      "tipo_usuario": "estudiante",
+      "asignaturas": [
+        {
+          "asignatura": "Programacion base de datos",
+          "seccion": "019D",
+          "sala": "A101",
+          "fecha": "2024-12-01"
+        },
+        {
+          "asignatura": "Arquitectura",
+          "seccion": "019D",
+          "sala": "B202",
+          "fecha": "2024-12-02"
+        },
+        {
+          "asignatura": "Portafolio",
+          "seccion": "019D",
+          "sala": "C303",
+          "fecha": "2024-12-03"
+        }
+      ],
+      "clases_aceptadas": [],
+      "id": "f339"
+    },
+    {
+      "nombre": "María",
+      "apellido": "González",
+      "correo": "maria.gonzalez@example.com",
+      "contraseña": "securePass456",
+      "tipo_usuario": "docente",
+      "asignaturas": [
+        {
+          "asignatura": "Programacion base de datos",
+          "seccion": "019D",
+          "sala": "D101",
+          "fecha": "2024-12-01"
+        },
+        {
+          "asignatura": "Arquitectura",
+          "seccion": "019D",
+          "sala": "E202",
+          "fecha": "2024-12-02"
+        }
+      ],
+      "clases_aceptadas": [],
+      "id": "128a"
+    }
+  ]
+}

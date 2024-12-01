@@ -26,11 +26,19 @@ export class AuthService {
     );
   }
 
-  setUserDetails(user: { correo: string; nombre: string; apellido: string; clases: string[] }) {
+  setUserDetails(user: { correo: string; nombre: string; apellido: string; clases: any[] }) {
     const fullName = `${user.nombre} ${user.apellido}`;
     localStorage.setItem('username', user.correo);
     localStorage.setItem('fullName', fullName);
-    localStorage.setItem('classes', JSON.stringify(user.clases)); // Almacenar clases como JSON
+
+    // Convertir cada asignatura en un objeto con propiedades definidas
+    const formattedClasses = user.clases.map((clase) => ({
+      nombre: clase.nombre || '',
+      seccion: clase.seccion || '',
+      sala: clase.sala || '',
+      horario: clase.horario || '',
+    }));
+    localStorage.setItem('classes', JSON.stringify(formattedClasses));
   }
 
   getUserDetails() {

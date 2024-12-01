@@ -1,23 +1,55 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, LoadingController, AlertController, IonIcon } from '@ionic/angular/standalone';
+import { 
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButton,
+  LoadingController,
+  AlertController,
+  IonIcon,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { BrowserMultiFormatReader } from '@zxing/library';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner'; // Importa BarcodeScanner
 import { AuthService } from '../services/auth.service';
+
+interface Asignatura {
+  asignatura: string;
+  seccion: string;
+  sala: string;
+  fecha: string;
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButton, CommonModule, IonIcon],
+  imports: [
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonButton,
+    CommonModule,
+    IonIcon,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+  ],
 })
 export class HomePage implements OnInit {
   username: string = '';
   fullName: string = '';
-  classes: string[] = [];
+  asignaturas: Asignatura[] = [];
   scannedCode: string | null = null;
-  codeReader: BrowserMultiFormatReader | null = null;
+  scanInProgress: boolean = false;
 
   constructor(
     private router: Router,
@@ -27,47 +59,78 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    const userDetails = this.authService.getUserDetails(); // Obtener detalles del usuario
-    if (!userDetails.username) {
+    const userDetails = this.authService.getUserDetails();
+    
+    if (!userDetails || !userDetails.username) {
       this.router.navigate(['/login']);
       return;
     }
-
+  
     this.username = userDetails.username;
-    this.fullName = userDetails.fullName || ''; // Recuperar el nombre completo
-    this.classes = userDetails.classes || []; // Recuperar las clases
+    this.fullName = userDetails.fullName || '';
+    this.asignaturas = userDetails.classes.map((clase: any) => ({
+      asignatura: clase.asignatura || '',
+      seccion: clase.seccion || '',
+      sala: clase.sala || '',
+      fecha: clase.fecha || '',
+    }));
   }
 
-  async openQrScanner() {
-    const loading = await this.loadingController.create({
-      message: 'Escaneando QR...',
-    });
-    await loading.present();
-
-    this.codeReader = new BrowserMultiFormatReader();
-    this.codeReader.decodeFromVideoDevice(null, 'video', async (result, err) => {
-      if (result) {
-        await loading.dismiss();
-        this.scannedCode = result.getText();
-      }
-      if (err) {
-        await loading.dismiss();
-        console.error('Error:', err);
-      }
-    }).catch(async (err) => {
-      await loading.dismiss();
-      console.error(err);
-    });
-  }
-
-  stopQrScanner() {
-    if (this.codeReader) {
-      this.codeReader.reset();
-      this.scannedCode = null;
-      this.codeReader = null;
+  // Inicia el escaneo de QR
+  async startScan() {
+    if (this.scanInProgress) {
+      return;
     }
+
+    this.scanInProgress = true;
+
+    // Verifica si el permiso de la cámara está disponible
+    const permission = await BarcodeScanner.checkPermission({ force: true });
+    if (!permission.granted) {
+      alert('Permisos de cámara no concedidos. Actívalos manualmente.');
+      this.scanInProgress = false;
+      return;
+    }
+
+    // Ocultar el fondo mientras escaneamos
+    await BarcodeScanner.hideBackground();
+
+    // Inicia el escaneo
+    const result = await BarcodeScanner.startScan();
+
+    // Mostrar el fondo nuevamente
+    await BarcodeScanner.showBackground();
+
+    if (result?.hasContent) {
+      this.scannedCode = result.content;
+      this.showQrResultPopup(this.scannedCode); // Muestra el popup con el contenido del QR
+    } else {
+      alert('No se detectó ningún código QR');
+    }
+
+    this.scanInProgress = false;
   }
 
+  // Detener el escaneo
+  stopScan() {
+    BarcodeScanner.stopScan();
+    BarcodeScanner.showBackground();
+    this.scanInProgress = false;
+    this.scannedCode = null;
+  }
+
+  // Mostrar el popup con el resultado del QR
+  async showQrResultPopup(result: string) {
+    const alert = await this.alertController.create({
+      header: 'Código QR Escaneado',
+      message: `Contenido del QR: ${result}`,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
+  // Logout
   async logout() {
     const alert = await this.alertController.create({
       header: 'Cerrar sesión',
@@ -76,9 +139,6 @@ export class HomePage implements OnInit {
         {
           text: 'Cancelar',
           role: 'cancel',
-          handler: () => {
-            console.log('Cerrar sesión cancelado');
-          }
         },
         {
           text: 'Cerrar sesión',
@@ -90,5 +150,5 @@ export class HomePage implements OnInit {
       ],
     });
     await alert.present();
-  }  
+  }
 }
