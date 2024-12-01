@@ -65,10 +65,12 @@ export class LoginPage implements OnInit {
           await loading.dismiss(); // Cerrar el loading
           if (user) {
             this.authService.setUserDetails({
+              id: user.id,
               correo: user.correo,
               nombre: user.nombre,
               apellido: user.apellido,
-              asignaturas: user.asignaturas || [], // Cambiado a 'asignaturas'
+              asignaturas: user.asignaturas || [],
+              clases_aceptadas: user.clases_aceptadas || [],
             });
             this.loginError = false; // Restablecer el error de inicio de sesión
             this.router.navigate(['/home']);

@@ -26,7 +26,20 @@
           "fecha": "2024-12-03"
         }
       ],
-      "clases_aceptadas": [],
+      "clases_aceptadas": [
+        {
+          "asignatura": "Arquitectura",
+          "seccion": "019D",
+          "sala": "B202",
+          "fecha": "2024-12-02"
+        },
+        {
+          "asignatura": "Portafolio",
+          "seccion": "019D",
+          "sala": "C303",
+          "fecha": "2024-12-03"
+        }
+      ],
       "id": "f339"
     },
     {
