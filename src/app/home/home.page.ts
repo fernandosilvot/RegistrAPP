@@ -15,7 +15,7 @@ import {
   IonCardContent,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner'; // Importa BarcodeScanner
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AuthService } from '../services/auth.service';
 
 interface Asignatura {
@@ -87,28 +87,22 @@ export class HomePage implements OnInit {
 
     this.scanInProgress = true;
 
-    // Verifica si el permiso de la cámara está disponible
     const permission = await BarcodeScanner.checkPermission({ force: true });
     if (!permission.granted) {
-      alert('Permisos de cámara no concedidos. Actívalos manualmente.');
+      await this.presentAlert('Error', 'Permisos de cámara no concedidos. Actívalos manualmente.');
       this.scanInProgress = false;
       return;
     }
 
-    // Ocultar el fondo mientras escaneamos
     await BarcodeScanner.hideBackground();
-
-    // Inicia el escaneo
     const result = await BarcodeScanner.startScan();
-
-    // Mostrar el fondo nuevamente
     await BarcodeScanner.showBackground();
 
     if (result?.hasContent) {
       this.scannedCode = result.content;
-      this.showQrResultPopup(this.scannedCode); // Muestra el popup con el contenido del QR
+      this.showQrResultPopup(this.scannedCode); 
     } else {
-      alert('No se detectó ningún código QR');
+      await this.presentAlert('Error', 'No se detectó ningún código QR');
     }
 
     this.scanInProgress = false;
@@ -127,17 +121,46 @@ export class HomePage implements OnInit {
     // Parsear el contenido del QR
     const [asignatura, seccion, sala, fecha] = result.split('|');
 
-    const claseAceptada = {
+    const claseEscaneada: Asignatura = {
       asignatura: asignatura || '',
       seccion: seccion || '',
       sala: sala || '',
       fecha: fecha || '',
     };
 
-    // Confirmar con el usuario si desea agregar la clase
+    // Verificar si la clase escaneada pertenece a las asignaturas del usuario
+    const asignaturaEncontrada = this.asignaturas.find(
+      (a) =>
+        a.asignatura === claseEscaneada.asignatura &&
+        a.seccion === claseEscaneada.seccion &&
+        a.sala === claseEscaneada.sala &&
+        a.fecha === claseEscaneada.fecha
+    );
+
+    if (!asignaturaEncontrada) {
+      // La asignatura no pertenece al usuario
+      await this.presentAlert('Error', 'La asignatura escaneada no pertenece a tus asignaturas.');
+      return;
+    }
+
+    // Verificar si ya existe la clase en las clasesAceptadas (evitar duplicados)
+    const yaRegistrada = this.clasesAceptadas.some(
+      (c) =>
+        c.asignatura === claseEscaneada.asignatura &&
+        c.seccion === claseEscaneada.seccion &&
+        c.sala === claseEscaneada.sala &&
+        c.fecha === claseEscaneada.fecha
+    );
+
+    if (yaRegistrada) {
+      await this.presentAlert('Información', 'Esta clase ya fue registrada previamente.');
+      return;
+    }
+
+    // Si pasa las validaciones, mostrar el popup de confirmación
     const alert = await this.alertController.create({
       header: 'Clase Escaneada',
-      message: `Asignatura: ${asignatura}<br>Sección: ${seccion}<br>Sala: ${sala}<br>Fecha: ${fecha}<br><br>¿Deseas registrar tu asistencia a esta clase?`,
+      message: `Asignatura: ${asignatura} | Sección: ${seccion} | Sala: ${sala} | Fecha: ${fecha}| ¿Deseas registrar tu asistencia a esta clase?`,
       buttons: [
         {
           text: 'Cancelar',
@@ -146,7 +169,7 @@ export class HomePage implements OnInit {
         {
           text: 'Aceptar',
           handler: () => {
-            this.addClaseAceptada(claseAceptada);
+            this.addClaseAceptada(claseEscaneada);
           },
         },
       ],
@@ -158,22 +181,15 @@ export class HomePage implements OnInit {
   // Agregar clase aceptada
   addClaseAceptada(clase: Asignatura) {
     this.authService.addClaseAceptada(clase).subscribe(
-      (response) => {
+      async (response) => {
         // Actualizar clases aceptadas localmente
         this.clasesAceptadas.push(clase);
-        // Actualizar en localStorage
-        localStorage.setItem(
-          'clases_aceptadas',
-          JSON.stringify(this.clasesAceptadas)
-        );
-        this.presentAlert('Éxito', 'Asistencia registrada correctamente.');
+        localStorage.setItem('clases_aceptadas', JSON.stringify(this.clasesAceptadas));
+        await this.presentAlert('Éxito', 'Asistencia registrada correctamente.');
       },
-      (error) => {
+      async (error) => {
         console.error('Error al agregar clase aceptada', error);
-        this.presentAlert(
-          'Error',
-          'Ocurrió un error al registrar tu asistencia.'
-        );
+        await this.presentAlert('Error', 'Ocurrió un error al registrar tu asistencia.');
       }
     );
   }
