@@ -7,7 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://54.210.160.48:3000/usuarios'; // URL de la API
+  private apiUrl = 'https://cybersecurity.fernandosilvot.cl/usuarios'; // URL de la API
   private userId: string = ''; // Guardar el ID del usuario
 
   constructor(private http: HttpClient) {}
